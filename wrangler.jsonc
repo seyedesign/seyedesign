@@ -3,6 +3,10 @@
   "name": "seyedesign",
   "compatibility_date": "2026-11-01",
   "workers_dev": true,
+  "routes": [
+    { "pattern": "seyedesign.com", "custom_domain": true },
+    { "pattern": "www.seyedesign.com", "custom_domain": true }
+  ],
   "assets": {
     "directory": "./public",
     "html_handling": "auto-trailing-slash",
