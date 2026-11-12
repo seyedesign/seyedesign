@@ -1,0 +1,11 @@
+{
+  // Seyedesign portfolio: a static site served by Cloudflare Workers (static assets only, no server code).
+  "name": "seyedesign",
+  "compatibility_date": "2026-11-01",
+  "workers_dev": true,
+  "assets": {
+    "directory": "./public",
+    "html_handling": "auto-trailing-slash",
+    "not_found_handling": "404-page"
+  }
+}
