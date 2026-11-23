@@ -21,7 +21,7 @@
 <meta name="color-scheme" content="dark">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <style>html{background:#121211}</style>
-<script>try{if(localStorage.getItem('seyedesign-style')==='pixel')document.documentElement.classList.add('sd-pixel')}catch(e){}</script>
+<script>try{localStorage.removeItem('seyedesign-style')}catch(e){}</script>
 <meta name="sd-head-start">
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://seyedesign.com/#site","url":"https://seyedesign.com/","name":"Maryam Seyedi · Portfolio","inLanguage":"en","publisher":{"@id":"https://seyedesign.com/#maryam"}},{"mainEntityOfPage":"https://seyedesign.com/","@type":"Person","@id":"https://seyedesign.com/#maryam","name":"Maryam Seyedi","url":"https://seyedesign.com/","image":"https://seyedesign.com/assets/9bcfec7c51b7e45b85e3afb3b296b57f.jpg","jobTitle":"Product Designer","description":"Product designer and product builder with 7+ years in design, working on digital products across EdTech, digital health and SaaS, from research and strategy to interaction design, design systems and AI-assisted prototyping.","email":"mailto:maryamseyedi2002@gmail.com","address":{"@type":"PostalAddress","addressLocality":"Kuala Lumpur","addressCountry":"MY"},"worksFor":{"@type":"Organization","name":"Jack Westin","url":"https://jackwestin.com/"},"knowsAbout":["Product design","UX research","Usability testing","Interaction design","Design systems","Product strategy","Prototyping","AI-assisted design"],"sameAs":["https://www.linkedin.com/in/seyedesign/","https://www.instagram.com/maryam_seyedesign/","https://vimeo.com/user266143052"]},{"@type":"ProfilePage","@id":"https://seyedesign.com/#page","url":"https://seyedesign.com/","name":"Maryam Seyedi · Product Designer & Product Builder","description":"Portfolio of Maryam Seyedi, a product designer and product builder with 7+ years in design across EdTech, digital health and SaaS. Case studies, experience and contact.","mainEntity":{"@id":"https://seyedesign.com/#maryam"},"isPartOf":{"@id":"https://seyedesign.com/#site"}},{"@type":"VideoObject","name":"So, tell me about yourself…","description":"Maryam Seyedi answers the classic question, “Can you tell me a little about yourself?”: who she is, her journey, and the things that excite her.","thumbnailUrl":"https://i.vimeocdn.com/video/2229362151-92f9d2c3fca60f86002f8348cc3a6a8f4bb816b797b673971fa7d7fe025baf3f-d_1280x720","uploadDate":"2026-11-22","duration":"PT2M32S","embedUrl":"https://player.vimeo.com/video/1249088670","url":"https://vimeo.com/1249088670","creator":{"@id":"https://seyedesign.com/#maryam"}}]}</script>
 
@@ -2286,7 +2286,7 @@ class Component extends DCLogic {
   /* ---------- Appearance ---------- */
   var aBtn = el('button', { type: 'button', class: 'sd-btn', 'aria-haspopup': 'dialog', 'aria-expanded': 'false', 'aria-controls': uid + '-a', 'aria-label': 'Appearance', title: 'Appearance' }, ICON.app);
   var aPop = el('div', { id: uid + '-a', class: 'sd-pop', role: 'dialog', 'aria-label': 'Appearance', hidden: '' });
-  var theme = 'dark'; put(KEY_T, 'dark'); var style = get(KEY_S) === 'pixel' ? 'pixel' : 'studio';
+  var theme = 'dark'; put(KEY_T, 'dark'); var style = 'studio'; try { win.localStorage.removeItem(KEY_S); } catch (e) {}
   var PREV_S = '<svg class="sd-prev" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="1.75" y="1.75" width="12.5" height="12.5" rx="4"/><path d="M5 9.5c1-2 5-2 6 0" stroke-linecap="round"/></svg>';
   var PREV_P = '<svg class="sd-prev" width="16" height="16" viewBox="0 0 16 16" fill="currentColor" shape-rendering="crispEdges" aria-hidden="true"><path d="M3 1h10v2H3zM1 3h2v10H1zM13 3h2v10h-2zM3 13h10v2H3zM5 9h2v2H5zM9 9h2v2H9zM7 11h2v1H7z"/></svg>';
   aPop.innerHTML = '<h2>Appearance</h2>' +
@@ -2311,6 +2311,8 @@ class Component extends DCLogic {
   };
   win.addEventListener('storage', onStore); cleanups.push(function () { win.removeEventListener('storage', onStore); });
   var aWrap = el('div', { style: 'position:relative' }); aWrap.appendChild(aBtn); aWrap.appendChild(aPop); nodes.push(aWrap);
+  /* music player and style switcher retired: build nothing into the header */
+  nodes.length = 0; FX.on = false;
   ensure(); mo.observe(doc.body, { childList: true, subtree: true });
   makePop(aBtn, aPop);
   aBtn.addEventListener('click', function () { if (!aPop.hidden) FX.play('open'); });
