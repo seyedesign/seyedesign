@@ -883,12 +883,12 @@ class Component extends DCLogic {
     if (FX.ctx.state === 'suspended') { try { FX.ctx.resume(); } catch (e) {} }
     return FX.ctx;
   };
-  FX.play = function (name) {
+  FX.play = function (name, variant) {
     if (!FX.on || FX.vol <= 0 || doc.hidden) return;
-    var now = Date.now(); if (FX.last[name] && now - FX.last[name] < 70) return; FX.last[name] = now;
+    var lk = name + (variant == null ? '' : variant), now = Date.now(); if (FX.last[lk] && now - FX.last[lk] < 70) return; FX.last[lk] = now;
     if (FX.live > 4) return;
     var c = FX.ensure(); if (!c) return;
-    var t0 = c.currentTime + 0.005, out = c.createGain(); out.gain.value = FX.vol; out.connect(c.destination);
+    var t0 = c.currentTime + 0.005, out = c.createGain(), comp = c.createDynamicsCompressor(); out.gain.value = FX.vol * ({ tap: 1.7, tick: 2.2, click: 2, success: 2.2, page: 1.6, whoosh: 1.8, blip: 2, bloop: 1.5 }[name] || 1); comp.threshold.value = -6; comp.ratio.value = 4; out.connect(comp); comp.connect(c.destination);
     var end = t0;
     function tone(type, f1, f2, at, dur, g) {
       var o = c.createOscillator(), e = c.createGain(); o.type = type;
@@ -907,13 +907,23 @@ class Component extends DCLogic {
       src.connect(f); f.connect(e); e.connect(out); src.start(t0 + at); src.stop(t0 + at + dur + 0.02); end = Math.max(end, t0 + at + dur);
     }
     var pick = function (n) { return Math.floor(Math.random() * n); };
-    if (name === 'tap') { var f = [659.25, 783.99, 880][pick(3)]; tone('sine', f, 0, 0, 0.42, 0.16); tone('sine', f * 4, 0, 0, 0.09, 0.025); tone('triangle', f * 2, 0, 0, 0.16, 0.03); }
-    else if (name === 'tick') tone('triangle', 2100, 1500, 0, 0.03, 0.07);
-    else if (name === 'click') tone('triangle', 1400, 900, 0, 0.045, 0.12);
-    else if (name === 'success') { tone('sine', 880, 0, 0, 0.14, 0.12); tone('sine', 1318.5, 0, 0.07, 0.2, 0.1); }
-    else if (name === 'page') { swish(0, 0.24, 0.22, 1300, 4200, 0.9, 0.55); swish(0.2, 0.08, 0.12, 900, 500, 1.2, 0.2); tone('sine', 170, 95, 0.22, 0.09, 0.08); }
-    else if (name === 'whoosh') { if (pick(2)) swish(0, 0.42, 0.2, 380, 2400, 0.7, 0.6); else swish(0, 0.36, 0.2, 2600, 520, 0.7, 0.35); }
-    FX.live++; setTimeout(function () { FX.live = Math.max(0, FX.live - 1); try { out.disconnect(); } catch (e) {} }, (end - t0) * 1000 + 120);
+    /* a short bright noise burst: the "attack" that makes a sound feel physical */
+    function snap(at, g, freq) {
+      var n = Math.floor(c.sampleRate * 0.025), bf = c.createBuffer(1, n, c.sampleRate), d = bf.getChannelData(0);
+      for (var k = 0; k < n; k++) d[k] = (Math.random() * 2 - 1) * Math.pow(1 - k / n, 3);
+      var src = c.createBufferSource(), f = c.createBiquadFilter(), e = c.createGain(); src.buffer = bf; f.type = 'highpass'; f.frequency.value = freq || 2500; e.gain.value = g;
+      src.connect(f); f.connect(e); e.connect(out); src.start(t0 + at); end = Math.max(end, t0 + at + 0.03);
+    }
+    var PENT = [523.25, 587.33, 659.25, 783.99, 880, 1046.5, 1174.66];
+    if (name === 'tap') { var f = [659.25, 783.99, 880][pick(3)]; snap(0, 0.32, 1800); tone('sine', 190, 80, 0, 0.14, 0.42); tone('triangle', f, 0, 0.005, 0.55, 0.3); tone('sine', f * 2, 0, 0.005, 0.3, 0.1); tone('sine', f * 3.01, 0, 0.005, 0.12, 0.05); }
+    else if (name === 'tick') { snap(0, 0.35, 3200); tone('triangle', 1900, 1300, 0, 0.05, 0.22); }
+    else if (name === 'click') { snap(0, 0.3, 2400); tone('sine', 520, 1150, 0, 0.07, 0.34); tone('triangle', 1150, 0, 0.06, 0.08, 0.1); }
+    else if (name === 'success') { snap(0, 0.2, 3000); tone('triangle', 880, 0, 0, 0.18, 0.24); tone('triangle', 1108.7, 0, 0.07, 0.2, 0.22); tone('sine', 1318.5, 0, 0.14, 0.4, 0.22); }
+    else if (name === 'page') { swish(0, 0.26, 0.55, 1200, 4800, 0.8, 0.5); swish(0.2, 0.1, 0.3, 1000, 450, 1.1, 0.15); snap(0.24, 0.3, 900); tone('sine', 160, 70, 0.24, 0.12, 0.4); }
+    else if (name === 'whoosh') { if (pick(2)) swish(0, 0.5, 0.6, 300, 3200, 0.6, 0.65); else swish(0, 0.44, 0.6, 3400, 380, 0.6, 0.3); tone('sine', 140, 60, 0.12, 0.25, 0.18); }
+    else if (name === 'blip') { var bf2 = PENT[(variant || 0) % 3 + 2]; tone('sine', bf2 * 0.75, bf2, 0, 0.05, 0.22); tone('triangle', bf2, 0, 0.045, 0.16, 0.16); }
+    else if (name === 'bloop') { var p = PENT[(variant || 0) % PENT.length] * 0.5; tone('sine', p * 0.6, p * 1.6, 0, 0.09, 0.32); tone('sine', p * 1.6, 0, 0.08, 0.12, 0.08); }
+    FX.live++; setTimeout(function () { FX.live = Math.max(0, FX.live - 1); try { out.disconnect(); comp.disconnect(); } catch (e) {} }, (end - t0) * 1000 + 160);
   };
   var onVis = function () { if (FX.ctx) { try { doc.hidden ? FX.ctx.suspend() : 0; } catch (e) {} } };
   doc.addEventListener('visibilitychange', onVis);
@@ -928,6 +938,20 @@ class Component extends DCLogic {
     if (el.matches('.qs-link, .drawer-btn') || (el.getAttribute('aria-expanded') === 'false' && !el.hasAttribute('aria-haspopup'))) { FX.play('whoosh'); return; }
     if (el.matches('.soft, .chip-live, a[aria-label="Back to all work"]')) { FX.play(/^copy/i.test((el.getAttribute('aria-label') || '').trim()) ? 'success' : 'click'); }
   };
+  /* hover sounds: only for a real mouse, only on the social icons and the "My default settings" chips */
+  var HOV = 'a[aria-label="LinkedIn"], a[aria-label="Instagram"], a[aria-label^="Telegram"], .dflt';
+  var onFxHover = function (e) {
+    if (!FX.on || e.pointerType !== 'mouse') return;
+    var t = e.target; if (!t || !t.closest) return;
+    var el = t.closest(HOV); if (!el) return;
+    if (e.relatedTarget && el.contains(e.relatedTarget)) return;
+    var sib = Array.prototype.indexOf.call(el.parentNode.children, el);
+    FX.play(el.classList.contains('dflt') ? 'bloop' : 'blip', sib);
+  };
+  /* browsers only allow sound after a first click or key press; wake the audio then so hovers work afterwards */
+  var onUnlock = function () { FX.ensure(); };
+  doc.addEventListener('pointerover', onFxHover);
+  doc.addEventListener('pointerdown', onUnlock, true); doc.addEventListener('keydown', onUnlock, true);
   doc.addEventListener('click', onFxClick, true);
   if (!doc.getElementById('sd-chrome-css')) {
     var st = doc.createElement('style'); st.id = 'sd-chrome-css';
@@ -1144,7 +1168,7 @@ class Component extends DCLogic {
 
   var onDoc = function (e) { if (!nodes.some(function (n) { return n.contains(e.target); })) closeAll(null); };
   doc.addEventListener('pointerdown', onDoc); cleanups.push(function () { doc.removeEventListener('pointerdown', onDoc); });
-  cleanups.push(function () { doc.removeEventListener('click', onFxClick, true); doc.removeEventListener('visibilitychange', onVis); });
+  cleanups.push(function () { doc.removeEventListener('click', onFxClick, true); doc.removeEventListener('visibilitychange', onVis); doc.removeEventListener('pointerover', onFxHover); doc.removeEventListener('pointerdown', onUnlock, true); doc.removeEventListener('keydown', onUnlock, true); });
   /* ---- Case-study hero reel: the final work in motion, built from the case study's own screens ---- */
   (function sdReel() {
     var RK = (o.sel.match(/data-sd="([^"]+)"/) || [])[1];
