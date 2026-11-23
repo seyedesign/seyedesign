@@ -11,6 +11,7 @@
 
 ## Case studies
 
+- [Say It Daily](https://seyedesign.com/say-it-daily): a personal project turned into an AI-assisted product, a working prototype for capturing, reviewing and practising English expressions, designed and built with Claude.
 - [Lila onboarding redesign](https://seyedesign.com/lila): redesigning the onboarding of Lila, an app for women in perimenopause, through an audit, benchmarking and testing with six women.
 - [MCAT Hub Calendar at Jack Westin](https://seyedesign.com/jackwestin): designing and launching a calendar that brings study schedules, assignments and live sessions together for MCAT students.
 - [Homay-nameh](https://seyedesign.com/homay): a monthly digital letter, two issues and two experiments, with feedback from 17 readers.

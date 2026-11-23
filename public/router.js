@@ -4,7 +4,7 @@
   'use strict';
   if (!window.history || !history.pushState || !window.fetch || !window.DOMParser) return;
   window.__sdRouter = true;
-  var ROUTES = ['/', '/lila', '/jackwestin', '/homay', '/top-dogs', '/weframe', '/rubikamp'];
+  var ROUTES = ['/', '/say-it-daily', '/lila', '/jackwestin', '/homay', '/top-dogs', '/weframe', '/rubikamp'];
   try { history.scrollRestoration = 'manual'; } catch (e) {}
   function norm(p) { p = (p || '/').replace(/\/index(\.html)?$/, '/').replace(/\.html$/, ''); if (p.length > 1 && p.charAt(p.length - 1) === '/') p = p.slice(0, -1); return p || '/'; }
   function internal(a) {
