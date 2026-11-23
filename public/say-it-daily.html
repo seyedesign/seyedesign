@@ -1693,7 +1693,7 @@ class Component extends DCLogic {
   var FX = SH.__sdSfx;
   if (!FX) {
     var fxs = {}; try { fxs = JSON.parse(get('seyedesign-sfx') || '{}') || {}; } catch (e) {}
-    FX = SH.__sdSfx = { on: fxs.on === true, vol: fxs.vol == null ? 0.6 : Math.min(Math.max(+fxs.vol, 0), 1), ctx: null, last: {}, live: 0 };
+    FX = SH.__sdSfx = { on: true, vol: 0.6, ctx: null, last: {}, live: 0 };
   }
   FX.save = function () { put('seyedesign-sfx', JSON.stringify({ on: FX.on, vol: FX.vol })); };
   FX.ensure = function () {
@@ -1701,13 +1701,12 @@ class Component extends DCLogic {
     if (FX.ctx.state === 'suspended') { try { FX.ctx.resume(); } catch (e) {} }
     return FX.ctx;
   };
-  FX.play = function (name, style) {
+  FX.play = function (name) {
     if (!FX.on || FX.vol <= 0 || doc.hidden) return;
     var now = Date.now(); if (FX.last[name] && now - FX.last[name] < 70) return; FX.last[name] = now;
     if (FX.live > 4) return;
     var c = FX.ensure(); if (!c) return;
-    var px = (style || (doc.documentElement.classList.contains('sd-pixel') ? 'pixel' : 'studio')) === 'pixel';
-    var t0 = c.currentTime + 0.005, out = c.createGain(); out.gain.value = FX.vol * (px ? 0.55 : 0.9); out.connect(c.destination);
+    var t0 = c.currentTime + 0.005, out = c.createGain(); out.gain.value = FX.vol; out.connect(c.destination);
     var end = t0;
     function tone(type, f1, f2, at, dur, g) {
       var o = c.createOscillator(), e = c.createGain(); o.type = type;
@@ -1716,41 +1715,36 @@ class Component extends DCLogic {
       e.gain.exponentialRampToValueAtTime(0.0001, t0 + at + dur);
       o.connect(e); e.connect(out); o.start(t0 + at); o.stop(t0 + at + dur + 0.02); end = Math.max(end, t0 + at + dur);
     }
-    function step(f, at, dur, g) { var o = c.createOscillator(), e = c.createGain(); o.type = 'square'; o.frequency.setValueAtTime(f, t0 + at);
-      e.gain.setValueAtTime(g, t0 + at); e.gain.setValueAtTime(0, t0 + at + dur); o.connect(e); e.connect(out); o.start(t0 + at); o.stop(t0 + at + dur + 0.01); end = Math.max(end, t0 + at + dur); }
-    function noise(at, dur, g, freq, crush) {
-      var n = Math.floor(c.sampleRate * dur), b = c.createBuffer(1, n, c.sampleRate), d = b.getChannelData(0), hold = crush || 1, v = 0;
-      for (var k = 0; k < n; k++) { if (k % hold === 0) v = Math.random() * 2 - 1; d[k] = v * (1 - k / n); }
-      var src = c.createBufferSource(), f = c.createBiquadFilter(), e = c.createGain(); src.buffer = b; f.type = 'bandpass'; f.frequency.value = freq; f.Q.value = 0.8; e.gain.value = g;
-      src.connect(f); f.connect(e); e.connect(out); src.start(t0 + at); end = Math.max(end, t0 + at + dur);
+    /* filtered noise that sweeps from f1 to f2, swelling in and fading out (air, paper) */
+    function swish(at, dur, g, f1, f2, q, rise) {
+      var n = Math.floor(c.sampleRate * dur), bf = c.createBuffer(1, n, c.sampleRate), d = bf.getChannelData(0);
+      for (var k = 0; k < n; k++) d[k] = Math.random() * 2 - 1;
+      var src = c.createBufferSource(), f = c.createBiquadFilter(), e = c.createGain(); src.buffer = bf;
+      f.type = 'bandpass'; f.Q.value = q; f.frequency.setValueAtTime(f1, t0 + at); f.frequency.exponentialRampToValueAtTime(f2, t0 + at + dur);
+      e.gain.setValueAtTime(0.0001, t0 + at); e.gain.exponentialRampToValueAtTime(g, t0 + at + dur * rise); e.gain.exponentialRampToValueAtTime(0.0001, t0 + at + dur);
+      src.connect(f); f.connect(e); e.connect(out); src.start(t0 + at); src.stop(t0 + at + dur + 0.02); end = Math.max(end, t0 + at + dur);
     }
-    if (!px) {
-      if (name === 'click') tone('triangle', 1400, 900, 0, 0.045, 0.16);
-      else if (name === 'open') tone('sine', 520, 820, 0, 0.09, 0.2);
-      else if (name === 'success') { tone('sine', 880, 0, 0, 0.14, 0.14); tone('sine', 1318.5, 0, 0.07, 0.2, 0.12); }
-      else if (name === 'switch') { tone('sine', 392, 587, 0, 0.26, 0.1); tone('triangle', 587, 880, 0.06, 0.26, 0.07); }
-      else if (name === 'envelope') { noise(0, 0.17, 0.32, 2600, 1); tone('sine', 220, 140, 0, 0.12, 0.12); }
-    } else {
-      if (name === 'click') step(988, 0, 0.04, 0.12);
-      else if (name === 'open') { step(659, 0, 0.045, 0.11); step(988, 0.045, 0.05, 0.11); }
-      else if (name === 'success') { step(784, 0, 0.07, 0.11); step(1175, 0.075, 0.11, 0.11); }
-      else if (name === 'switch') { [523, 659, 784, 1047].forEach(function (f, j) { step(f, j * 0.045, 0.045, 0.1); }); }
-      else if (name === 'envelope') { noise(0, 0.1, 0.4, 1800, 6); step(1568, 0.06, 0.05, 0.09); }
-    }
+    var pick = function (n) { return Math.floor(Math.random() * n); };
+    if (name === 'tap') { var f = [659.25, 783.99, 880][pick(3)]; tone('sine', f, 0, 0, 0.42, 0.16); tone('sine', f * 4, 0, 0, 0.09, 0.025); tone('triangle', f * 2, 0, 0, 0.16, 0.03); }
+    else if (name === 'tick') tone('triangle', 2100, 1500, 0, 0.03, 0.07);
+    else if (name === 'click') tone('triangle', 1400, 900, 0, 0.045, 0.12);
+    else if (name === 'success') { tone('sine', 880, 0, 0, 0.14, 0.12); tone('sine', 1318.5, 0, 0.07, 0.2, 0.1); }
+    else if (name === 'page') { swish(0, 0.24, 0.22, 1300, 4200, 0.9, 0.55); swish(0.2, 0.08, 0.12, 900, 500, 1.2, 0.2); tone('sine', 170, 95, 0.22, 0.09, 0.08); }
+    else if (name === 'whoosh') { if (pick(2)) swish(0, 0.42, 0.2, 380, 2400, 0.7, 0.6); else swish(0, 0.36, 0.2, 2600, 520, 0.7, 0.35); }
     FX.live++; setTimeout(function () { FX.live = Math.max(0, FX.live - 1); try { out.disconnect(); } catch (e) {} }, (end - t0) * 1000 + 120);
   };
   var onVis = function () { if (FX.ctx) { try { doc.hidden ? FX.ctx.suspend() : 0; } catch (e) {} } };
   doc.addEventListener('visibilitychange', onVis);
   /* which page interactions make a sound (never hover, scroll, plain links or navigation) */
   var onFxClick = function (e) {
-    if (!FX.on) return;
-    var t = e.target; if (!t || !t.closest || t.closest('.sd-slot')) return;
-    var el = t.closest('button, a, [role="button"], .zw > img'); if (!el) return;
-    if (el.closest('.lt-open')) { FX.play('envelope'); return; }
-    var lab = (el.getAttribute('aria-label') || el.textContent || '').trim();
-    if (/^copy/i.test(lab)) { FX.play('success'); return; }
-    if (el.matches('.zbtn, .zw > img, .artifact, .gcard, [aria-haspopup]') || el.getAttribute('aria-expanded') === 'false') { FX.play('open'); return; }
-    if (el.matches('button.soft, a.soft[download], a.soft[target="_blank"], .bk-cta, .btn-pri, .btn-sec, .bf-next, button[type="submit"]')) FX.play('click');
+    if (!FX.on || e.button) return;
+    var t = e.target; if (!t || !t.closest) return;
+    var el = t.closest('button, a, [role="button"]'); if (!el) return;
+    if (el.closest('.wcard, .nx-card')) { FX.play('tap'); return; }
+    if (el.matches('.sx-tab, .sx-pp, .cvt-tab, .gal-arr, .gal-btn')) { FX.play('tick'); return; }
+    if (el.matches('.iss, .lt-open')) { FX.play('page'); return; }
+    if (el.matches('.qs-link, .drawer-btn') || (el.getAttribute('aria-expanded') === 'false' && !el.hasAttribute('aria-haspopup'))) { FX.play('whoosh'); return; }
+    if (el.matches('.soft, .chip-live, a[aria-label="Back to all work"]')) { FX.play(/^copy/i.test((el.getAttribute('aria-label') || '').trim()) ? 'success' : 'click'); }
   };
   doc.addEventListener('click', onFxClick, true);
   if (!doc.getElementById('sd-chrome-css')) {
@@ -1959,7 +1953,7 @@ class Component extends DCLogic {
   win.addEventListener('storage', onStore); cleanups.push(function () { win.removeEventListener('storage', onStore); });
   var aWrap = el('div', { style: 'position:relative' }); aWrap.appendChild(aBtn); aWrap.appendChild(aPop); nodes.push(aWrap);
   /* music player and style switcher retired: build nothing into the header */
-  nodes.length = 0; FX.on = false;
+  nodes.length = 0; FX.on = true; FX.vol = 0.6;
   ensure(); mo.observe(doc.body, { childList: true, subtree: true });
   makePop(aBtn, aPop);
   aBtn.addEventListener('click', function () { if (!aPop.hidden) FX.play('open'); });
