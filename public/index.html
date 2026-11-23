@@ -192,6 +192,35 @@ a{color:inherit}a:hover{color:#FF0062}
 .wgroup-n{font-family:var(--font-mono);font-size:var(--fs-caption);color:var(--muted)}
 .wgroup-t{margin:0;font-size:var(--fs-h3);font-weight:var(--fw-semibold);letter-spacing:var(--ls-h3);line-height:var(--lh-h3)}
 .wgroup-s{margin:0;font-size:var(--fs-body-sm);line-height:var(--lh-body-sm);color:var(--muted)}
+.wk{display:flex;flex-direction:column;gap:var(--space-4)}
+.wk-panel{display:grid;grid-template-columns:232px minmax(0,1fr);gap:var(--space-6);padding:var(--space-4) var(--space-4) var(--space-4) var(--space-5);background:var(--card);border-radius:var(--r-lg)}
+.wk-head{display:flex;flex-direction:column;gap:var(--space-2);padding:var(--space-3) 0 var(--space-2)}
+.wk-n{font-family:var(--font-mono);font-size:var(--fs-caption);color:var(--muted)}
+.wk-t{margin:0;font-size:var(--fs-h3);font-weight:var(--fw-semibold);letter-spacing:var(--ls-h3);line-height:var(--lh-h3)}
+.wk-s{margin:0;font-size:var(--fs-body-sm);line-height:var(--lh-body-sm);color:var(--muted)}
+.wk-c{margin-top:auto;font-family:var(--font-mono);font-size:var(--fs-overline);letter-spacing:var(--ls-overline);text-transform:uppercase;color:var(--muted)}
+.wk-grid{display:grid;gap:var(--space-2)}
+.wk-g2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.wk-g3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.wk-it{display:flex;flex-direction:column;gap:var(--space-3);padding:var(--space-2);border-radius:var(--r-md);color:var(--ink);text-decoration:none;outline:none;transition:background-color var(--dur) var(--ease)}
+.wk-img{position:relative;display:block;aspect-ratio:16/10;border-radius:var(--r-sm);overflow:hidden;background:var(--chip)}
+.wk-img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform var(--dur) var(--ease)}
+.wk-row{display:flex;align-items:flex-start;justify-content:space-between;gap:var(--space-3);padding:0 var(--space-1) var(--space-1)}
+.wk-txt{display:flex;flex-direction:column;gap:2px;min-width:0}
+.wk-name{font-size:17px;font-weight:var(--fw-semibold);letter-spacing:var(--ls-h3);line-height:1.3}
+.wk-cat{font-size:var(--fs-caption);line-height:1.4;color:var(--muted)}
+.wk-over{font-family:var(--font-mono);font-size:var(--fs-overline);letter-spacing:var(--ls-overline);text-transform:uppercase;margin-bottom:2px}
+.wk-line{font-size:var(--fs-body-sm);line-height:var(--lh-body-sm);color:var(--muted)}
+.wk-arrow{flex:none;margin-top:3px;color:var(--muted);transition:transform var(--dur) var(--ease),color var(--dur) var(--ease)}
+.wk-it:hover,.wk-it:focus-visible{background:var(--chip)}
+.wk-it:hover .wk-img img,.wk-it:focus-visible .wk-img img{transform:scale(1.03)}
+.wk-it:hover .wk-arrow,.wk-it:focus-visible .wk-arrow{transform:translate(2px,-2px);color:var(--ink)}
+.wk-it:focus-visible{box-shadow:0 0 0 2px var(--card),0 0 0 4px #FF0062}
+@media (max-width:1100px){.wk-panel{grid-template-columns:200px minmax(0,1fr);gap:var(--space-5)}}
+@media (max-width:860px){.wk-panel{grid-template-columns:1fr;gap:var(--space-3);padding:var(--space-4)}.wk-head{display:grid;grid-template-columns:auto 1fr auto;align-items:baseline;column-gap:var(--space-3);row-gap:2px;padding:var(--space-1) var(--space-2) 0}.wk-s{grid-column:2/4}.wk-c{grid-row:1;grid-column:3;margin:0}}
+@media (max-width:560px){.wk-panel{padding:var(--space-2);border-radius:var(--r-md)}.wk-head{padding:var(--space-3) var(--space-2) var(--space-1)}.wk-name{font-size:15px}.wk-row{padding:0 2px 2px}.wk-arrow{display:none}
+.wk-g3{grid-template-columns:1fr}.wk-g3 .wk-it{flex-direction:row;align-items:center;gap:var(--space-3)}.wk-g3 .wk-img{flex:0 0 42%}.wk-g3 .wk-row{padding:0}.wk-line{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;font-size:13px}}
+@media (prefers-reduced-motion:reduce){.wk-it,.wk-img img,.wk-arrow{transition:none}.wk-it:hover .wk-img img,.wk-it:focus-visible .wk-img img{transform:none}}
 .wcard-cat{font-family:var(--font-mono);font-size:var(--fs-overline);letter-spacing:var(--ls-overline);text-transform:uppercase;color:var(--muted)}
 .wcard-desc{font-size:var(--fs-body-sm);line-height:var(--lh-body-sm);color:var(--muted)}
 .wcard-title{font-size:var(--fs-body);line-height:var(--lh-body-sm);color:var(--ink)}
@@ -746,90 +775,44 @@ html.sd-pixel svg:has(path[d="m20 20-3.5-3.5M11 8v6M8 11h6"]) *,html.sd-pixel sv
 <h2 style="margin: 0; font-weight: var(--fw-semibold); font-size: var(--fs-h2); letter-spacing: var(--ls-h2); line-height: var(--lh-h2)">Selected work</h2>
 <span style="font-family: var(--font-mono); font-size: var(--fs-caption); color: var(--muted)">01</span>
 </div>
-<div class="wgroup">
-<div class="wgroup-head"><span class="wgroup-n">01</span><h3 class="wgroup-t">Digital Experiences</h3><p class="wgroup-s">Solving problems through digital products.</p></div>
-<div class="g3 g4">
-<a class="wcard" href="/say-it-daily" aria-label="Say It Daily (AI, EdTech): I just couldn’t say it. View case study">
-<span class="wcard-media">
-<span class="wcard-tags" aria-hidden="true"><span class="wcard-tag">AI</span><span class="wcard-tag">EdTech</span></span>
-<img class="wcard-img" src="/assets/48044b80aaaaacddaf682d70932ba53e.jpg" alt="Say It Daily review screen on a phone held in one hand" style="object-position: center 40%">
-</span>
-<span class="wcard-body">
-<span class="wcard-row"><span class="wcard-name">Say It Daily</span><svg class="wcard-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"></path></svg></span>
-<span class="wcard-hook">“I just couldn’t say it.”</span>
-</span>
+<div class="wk">
+<div class="wk-panel">
+<div class="wk-head"><span class="wk-n">01</span><h3 class="wk-t">Digital Experiences</h3><p class="wk-s">Solving problems through digital products.</p><span class="wk-c">4 case studies</span></div>
+<div class="wk-grid wk-g2">
+<a class="wk-it" href="/say-it-daily" aria-label="Say It Daily (AI, EdTech): I just couldn’t say it. View case study">
+<span class="wk-img"><img src="/assets/1ffb17fa96a9849075fa0af39b8e1908.jpg" alt="Say It Daily on a phone held in one hand" loading="lazy" style="object-position: center 45%"></span>
+<span class="wk-row"><span class="wk-txt"><span class="wk-name">Say It Daily</span><span class="wk-cat">AI · EdTech</span></span><svg class="wk-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"></path></svg></span>
 </a>
-<a class="wcard" href="/lila" aria-label="Lila (AI, HealthTech): It’s not your fault. View case study">
-<span class="wcard-media">
-<span class="wcard-tags" aria-hidden="true"><span class="wcard-tag">AI</span><span class="wcard-tag">HealthTech</span></span>
-<img class="wcard-img" src="/assets/aaca6a1e6fe4c656ddb4aa38ce61b365.jpg" alt="Lila app onboarding screen on a phone mockup" style="object-position: center 30%">
-</span>
-<span class="wcard-body">
-<span class="wcard-row"><span class="wcard-name">Lila</span><svg class="wcard-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"></path></svg></span>
-<span class="wcard-hook">“It’s not your fault.”</span>
-</span>
+<a class="wk-it" href="/lila" aria-label="Lila (AI, HealthTech): It’s not your fault. View case study">
+<span class="wk-img"><img src="/assets/aaca6a1e6fe4c656ddb4aa38ce61b365.jpg" alt="Lila app onboarding screen on a phone mockup" loading="lazy" style="object-position: center 30%"></span>
+<span class="wk-row"><span class="wk-txt"><span class="wk-name">Lila</span><span class="wk-cat">AI · HealthTech</span></span><svg class="wk-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"></path></svg></span>
 </a>
-<a class="wcard" href="/jackwestin" aria-label="Jack Westin (EdTech): What did I miss? View case study">
-<span class="wcard-media">
-<span class="wcard-tags" aria-hidden="true"><span class="wcard-tag">EdTech</span></span>
-<img class="wcard-img" src="/assets/5d3044963bbac3ca921700e0e2d38fcd.jpg" alt="MCAT Hub Calendar week view on a laptop" style="object-position: center">
-</span>
-<span class="wcard-body">
-<span class="wcard-row"><span class="wcard-name">Jack Westin</span><svg class="wcard-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"></path></svg></span>
-<span class="wcard-hook">“What did I miss?”</span>
-</span>
+<a class="wk-it" href="/jackwestin" aria-label="Jack Westin (EdTech): What did I miss? View case study">
+<span class="wk-img"><img src="/assets/5d3044963bbac3ca921700e0e2d38fcd.jpg" alt="MCAT Hub Calendar week view on a laptop" loading="lazy" style="object-position: center"></span>
+<span class="wk-row"><span class="wk-txt"><span class="wk-name">Jack Westin</span><span class="wk-cat">EdTech</span></span><svg class="wk-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"></path></svg></span>
 </a>
-<a class="wcard" href="/homay" aria-label="Homay (Newsletter): A letter with no envelope. View case study">
-<span class="wcard-media">
-<span class="wcard-tags" aria-hidden="true"><span class="wcard-tag">Newsletter</span></span>
-<img class="wcard-img" src="/assets/25bfbb0b4eaaa2df556306fcc93675eb.jpg" alt="Homay-nameh November issue on a laptop, beside a glass of tea" style="object-position: center">
-</span>
-<span class="wcard-body">
-<span class="wcard-row"><span class="wcard-name">Homay</span><svg class="wcard-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"></path></svg></span>
-<span class="wcard-hook">“A letter with no envelope.”</span>
-</span>
+<a class="wk-it" href="/homay" aria-label="Homay (Newsletter): A letter with no envelope. View case study">
+<span class="wk-img"><img src="/assets/25bfbb0b4eaaa2df556306fcc93675eb.jpg" alt="Homay-nameh November issue on a laptop, beside a glass of tea" loading="lazy" style="object-position: center"></span>
+<span class="wk-row"><span class="wk-txt"><span class="wk-name">Homay</span><span class="wk-cat">Newsletter</span></span><svg class="wk-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"></path></svg></span>
 </a>
 </div>
 </div>
-<div class="wgroup">
-<div class="wgroup-head"><span class="wgroup-n">02</span><h3 class="wgroup-t">Things I’ve Built</h3><p class="wgroup-s">Not every good idea needs to become an app.</p></div>
-<div class="g3">
-<a class="wcard" href="/top-dogs" aria-label="Top Dogs, Design Studio (Startups): Building a studio from scratch. Open project">
-<span class="wcard-media">
-<span class="wcard-tags" aria-hidden="true"><span class="wcard-tag">Startups</span></span>
-<img class="wcard-img" src="/assets/9a4179ca248865701d13333719d28022.jpg" alt="Top Dogs: your product design partner, over a photo of the team in sunglasses" style="object-position: center">
-</span>
-<span class="wcard-body">
-<span class="wcard-cat">Design Studio</span>
-<span class="wcard-row"><span class="wcard-name">Top Dogs</span><svg class="wcard-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"></path></svg></span>
-<span class="wcard-title">Building a studio from scratch</span>
-<span class="wcard-desc">Co-founded a product design studio, turning ideas into real products with a curious, multidisciplinary team.</span>
-</span>
+<div class="wk-panel">
+<div class="wk-head"><span class="wk-n">02</span><h3 class="wk-t">Things I’ve Built</h3><p class="wk-s">Not every good idea needs to become an app.</p><span class="wk-c">3 projects</span></div>
+<div class="wk-grid wk-g3">
+<a class="wk-it" href="/top-dogs" aria-label="Top Dogs, Design Studio (Startups): Building a studio from scratch. Open project">
+<span class="wk-img"><img src="/assets/9a4179ca248865701d13333719d28022.jpg" alt="Top Dogs: your product design partner, over a photo of the team in sunglasses" loading="lazy"></span>
+<span class="wk-row"><span class="wk-txt"><span class="wk-cat wk-over">Design Studio</span><span class="wk-name">Top Dogs</span><span class="wk-line">Building a studio from scratch</span></span><svg class="wk-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"></path></svg></span>
 </a>
-<a class="wcard" href="/weframe" aria-label="WeFrame, Design Community (Community): Bringing curious minds together. Open project">
-<span class="wcard-media">
-<span class="wcard-tags" aria-hidden="true"><span class="wcard-tag">Community</span></span>
-<img class="wcard-img" src="/assets/aa79279347a9879102853f7e83e58432.jpg" alt="WeFrame design community logo over a photo of members at a meetup" style="object-position: center">
-</span>
-<span class="wcard-body">
-<span class="wcard-cat">Design Community</span>
-<span class="wcard-row"><span class="wcard-name">WeFrame</span><svg class="wcard-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"></path></svg></span>
-<span class="wcard-title">Bringing curious minds together</span>
-<span class="wcard-desc">Founded a community where designers and developers connect, share knowledge, and grow together.</span>
-</span>
+<a class="wk-it" href="/weframe" aria-label="WeFrame, Design Community (Community): Bringing curious minds together. Open project">
+<span class="wk-img"><img src="/assets/aa79279347a9879102853f7e83e58432.jpg" alt="WeFrame design community logo over a photo of members at a meetup" loading="lazy"></span>
+<span class="wk-row"><span class="wk-txt"><span class="wk-cat wk-over">Design Community</span><span class="wk-name">WeFrame</span><span class="wk-line">Bringing curious minds together</span></span><svg class="wk-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"></path></svg></span>
 </a>
-<a class="wcard" href="/rubikamp" aria-label="Rubikamp, Learning Experience (Education): Designing how people learn. Open project">
-<span class="wcard-media">
-<span class="wcard-tags" aria-hidden="true"><span class="wcard-tag">Education</span></span>
-<img class="wcard-img" src="/assets/9424a96d1c8de7bfda1ae435e7121330.jpg" alt="Rubikamp, teen entrepreneurship school, logo over a photo of students" style="object-position: center">
-</span>
-<span class="wcard-body">
-<span class="wcard-cat">Learning Experience</span>
-<span class="wcard-row"><span class="wcard-name">Rubikamp</span><svg class="wcard-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"></path></svg></span>
-<span class="wcard-title">Designing how people learn</span>
-<span class="wcard-desc">Designed and taught a two-year design course for teenagers, reshaping it every month with their feedback.</span>
-</span>
+<a class="wk-it" href="/rubikamp" aria-label="Rubikamp, Learning Experience (Education): Designing how people learn. Open project">
+<span class="wk-img"><img src="/assets/9424a96d1c8de7bfda1ae435e7121330.jpg" alt="Rubikamp, teen entrepreneurship school, logo over a photo of students" loading="lazy"></span>
+<span class="wk-row"><span class="wk-txt"><span class="wk-cat wk-over">Learning Experience</span><span class="wk-name">Rubikamp</span><span class="wk-line">Designing how people learn</span></span><svg class="wk-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"></path></svg></span>
 </a>
+</div>
 </div>
 </div>
 </section>
@@ -1401,90 +1384,44 @@ html.sd-pixel svg:has(path[d="m20 20-3.5-3.5M11 8v6M8 11h6"]) *,html.sd-pixel sv
 <h2 style="margin: 0; font-weight: var(--fw-semibold); font-size: var(--fs-h2); letter-spacing: var(--ls-h2); line-height: var(--lh-h2)">Selected work</h2>
 <span style="font-family: var(--font-mono); font-size: var(--fs-caption); color: var(--muted)">01</span>
 </div>
-<div class="wgroup">
-<div class="wgroup-head"><span class="wgroup-n">01</span><h3 class="wgroup-t">Digital Experiences</h3><p class="wgroup-s">Solving problems through digital products.</p></div>
-<div class="g3 g4">
-<a class="wcard" href="/say-it-daily" aria-label="Say It Daily (AI, EdTech): I just couldn’t say it. View case study">
-<span class="wcard-media">
-<span class="wcard-tags" aria-hidden="true"><span class="wcard-tag">AI</span><span class="wcard-tag">EdTech</span></span>
-<img class="wcard-img" src="/assets/48044b80aaaaacddaf682d70932ba53e.jpg" alt="Say It Daily review screen on a phone held in one hand" style="object-position: center 40%">
-</span>
-<span class="wcard-body">
-<span class="wcard-row"><span class="wcard-name">Say It Daily</span><svg class="wcard-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"></path></svg></span>
-<span class="wcard-hook">“I just couldn’t say it.”</span>
-</span>
+<div class="wk">
+<div class="wk-panel">
+<div class="wk-head"><span class="wk-n">01</span><h3 class="wk-t">Digital Experiences</h3><p class="wk-s">Solving problems through digital products.</p><span class="wk-c">4 case studies</span></div>
+<div class="wk-grid wk-g2">
+<a class="wk-it" href="/say-it-daily" aria-label="Say It Daily (AI, EdTech): I just couldn’t say it. View case study">
+<span class="wk-img"><img src="/assets/1ffb17fa96a9849075fa0af39b8e1908.jpg" alt="Say It Daily on a phone held in one hand" loading="lazy" style="object-position: center 45%"></span>
+<span class="wk-row"><span class="wk-txt"><span class="wk-name">Say It Daily</span><span class="wk-cat">AI · EdTech</span></span><svg class="wk-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"></path></svg></span>
 </a>
-<a class="wcard" href="/lila" aria-label="Lila (AI, HealthTech): It’s not your fault. View case study">
-<span class="wcard-media">
-<span class="wcard-tags" aria-hidden="true"><span class="wcard-tag">AI</span><span class="wcard-tag">HealthTech</span></span>
-<img class="wcard-img" src="/assets/aaca6a1e6fe4c656ddb4aa38ce61b365.jpg" alt="Lila app onboarding screen on a phone mockup" style="object-position: center 30%">
-</span>
-<span class="wcard-body">
-<span class="wcard-row"><span class="wcard-name">Lila</span><svg class="wcard-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"></path></svg></span>
-<span class="wcard-hook">“It’s not your fault.”</span>
-</span>
+<a class="wk-it" href="/lila" aria-label="Lila (AI, HealthTech): It’s not your fault. View case study">
+<span class="wk-img"><img src="/assets/aaca6a1e6fe4c656ddb4aa38ce61b365.jpg" alt="Lila app onboarding screen on a phone mockup" loading="lazy" style="object-position: center 30%"></span>
+<span class="wk-row"><span class="wk-txt"><span class="wk-name">Lila</span><span class="wk-cat">AI · HealthTech</span></span><svg class="wk-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"></path></svg></span>
 </a>
-<a class="wcard" href="/jackwestin" aria-label="Jack Westin (EdTech): What did I miss? View case study">
-<span class="wcard-media">
-<span class="wcard-tags" aria-hidden="true"><span class="wcard-tag">EdTech</span></span>
-<img class="wcard-img" src="/assets/5d3044963bbac3ca921700e0e2d38fcd.jpg" alt="MCAT Hub Calendar week view on a laptop" style="object-position: center">
-</span>
-<span class="wcard-body">
-<span class="wcard-row"><span class="wcard-name">Jack Westin</span><svg class="wcard-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"></path></svg></span>
-<span class="wcard-hook">“What did I miss?”</span>
-</span>
+<a class="wk-it" href="/jackwestin" aria-label="Jack Westin (EdTech): What did I miss? View case study">
+<span class="wk-img"><img src="/assets/5d3044963bbac3ca921700e0e2d38fcd.jpg" alt="MCAT Hub Calendar week view on a laptop" loading="lazy" style="object-position: center"></span>
+<span class="wk-row"><span class="wk-txt"><span class="wk-name">Jack Westin</span><span class="wk-cat">EdTech</span></span><svg class="wk-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"></path></svg></span>
 </a>
-<a class="wcard" href="/homay" aria-label="Homay (Newsletter): A letter with no envelope. View case study">
-<span class="wcard-media">
-<span class="wcard-tags" aria-hidden="true"><span class="wcard-tag">Newsletter</span></span>
-<img class="wcard-img" src="/assets/25bfbb0b4eaaa2df556306fcc93675eb.jpg" alt="Homay-nameh November issue on a laptop, beside a glass of tea" style="object-position: center">
-</span>
-<span class="wcard-body">
-<span class="wcard-row"><span class="wcard-name">Homay</span><svg class="wcard-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"></path></svg></span>
-<span class="wcard-hook">“A letter with no envelope.”</span>
-</span>
+<a class="wk-it" href="/homay" aria-label="Homay (Newsletter): A letter with no envelope. View case study">
+<span class="wk-img"><img src="/assets/25bfbb0b4eaaa2df556306fcc93675eb.jpg" alt="Homay-nameh November issue on a laptop, beside a glass of tea" loading="lazy" style="object-position: center"></span>
+<span class="wk-row"><span class="wk-txt"><span class="wk-name">Homay</span><span class="wk-cat">Newsletter</span></span><svg class="wk-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"></path></svg></span>
 </a>
 </div>
 </div>
-<div class="wgroup">
-<div class="wgroup-head"><span class="wgroup-n">02</span><h3 class="wgroup-t">Things I’ve Built</h3><p class="wgroup-s">Not every good idea needs to become an app.</p></div>
-<div class="g3">
-<a class="wcard" href="/top-dogs" aria-label="Top Dogs, Design Studio (Startups): Building a studio from scratch. Open project">
-<span class="wcard-media">
-<span class="wcard-tags" aria-hidden="true"><span class="wcard-tag">Startups</span></span>
-<img class="wcard-img" src="/assets/9a4179ca248865701d13333719d28022.jpg" alt="Top Dogs: your product design partner, over a photo of the team in sunglasses" style="object-position: center">
-</span>
-<span class="wcard-body">
-<span class="wcard-cat">Design Studio</span>
-<span class="wcard-row"><span class="wcard-name">Top Dogs</span><svg class="wcard-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"></path></svg></span>
-<span class="wcard-title">Building a studio from scratch</span>
-<span class="wcard-desc">Co-founded a product design studio, turning ideas into real products with a curious, multidisciplinary team.</span>
-</span>
+<div class="wk-panel">
+<div class="wk-head"><span class="wk-n">02</span><h3 class="wk-t">Things I’ve Built</h3><p class="wk-s">Not every good idea needs to become an app.</p><span class="wk-c">3 projects</span></div>
+<div class="wk-grid wk-g3">
+<a class="wk-it" href="/top-dogs" aria-label="Top Dogs, Design Studio (Startups): Building a studio from scratch. Open project">
+<span class="wk-img"><img src="/assets/9a4179ca248865701d13333719d28022.jpg" alt="Top Dogs: your product design partner, over a photo of the team in sunglasses" loading="lazy"></span>
+<span class="wk-row"><span class="wk-txt"><span class="wk-cat wk-over">Design Studio</span><span class="wk-name">Top Dogs</span><span class="wk-line">Building a studio from scratch</span></span><svg class="wk-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"></path></svg></span>
 </a>
-<a class="wcard" href="/weframe" aria-label="WeFrame, Design Community (Community): Bringing curious minds together. Open project">
-<span class="wcard-media">
-<span class="wcard-tags" aria-hidden="true"><span class="wcard-tag">Community</span></span>
-<img class="wcard-img" src="/assets/aa79279347a9879102853f7e83e58432.jpg" alt="WeFrame design community logo over a photo of members at a meetup" style="object-position: center">
-</span>
-<span class="wcard-body">
-<span class="wcard-cat">Design Community</span>
-<span class="wcard-row"><span class="wcard-name">WeFrame</span><svg class="wcard-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"></path></svg></span>
-<span class="wcard-title">Bringing curious minds together</span>
-<span class="wcard-desc">Founded a community where designers and developers connect, share knowledge, and grow together.</span>
-</span>
+<a class="wk-it" href="/weframe" aria-label="WeFrame, Design Community (Community): Bringing curious minds together. Open project">
+<span class="wk-img"><img src="/assets/aa79279347a9879102853f7e83e58432.jpg" alt="WeFrame design community logo over a photo of members at a meetup" loading="lazy"></span>
+<span class="wk-row"><span class="wk-txt"><span class="wk-cat wk-over">Design Community</span><span class="wk-name">WeFrame</span><span class="wk-line">Bringing curious minds together</span></span><svg class="wk-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"></path></svg></span>
 </a>
-<a class="wcard" href="/rubikamp" aria-label="Rubikamp, Learning Experience (Education): Designing how people learn. Open project">
-<span class="wcard-media">
-<span class="wcard-tags" aria-hidden="true"><span class="wcard-tag">Education</span></span>
-<img class="wcard-img" src="/assets/9424a96d1c8de7bfda1ae435e7121330.jpg" alt="Rubikamp, teen entrepreneurship school, logo over a photo of students" style="object-position: center">
-</span>
-<span class="wcard-body">
-<span class="wcard-cat">Learning Experience</span>
-<span class="wcard-row"><span class="wcard-name">Rubikamp</span><svg class="wcard-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"></path></svg></span>
-<span class="wcard-title">Designing how people learn</span>
-<span class="wcard-desc">Designed and taught a two-year design course for teenagers, reshaping it every month with their feedback.</span>
-</span>
+<a class="wk-it" href="/rubikamp" aria-label="Rubikamp, Learning Experience (Education): Designing how people learn. Open project">
+<span class="wk-img"><img src="/assets/9424a96d1c8de7bfda1ae435e7121330.jpg" alt="Rubikamp, teen entrepreneurship school, logo over a photo of students" loading="lazy"></span>
+<span class="wk-row"><span class="wk-txt"><span class="wk-cat wk-over">Learning Experience</span><span class="wk-name">Rubikamp</span><span class="wk-line">Designing how people learn</span></span><svg class="wk-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"></path></svg></span>
 </a>
+</div>
 </div>
 </div>
 </section>
@@ -2103,7 +2040,7 @@ class Component extends DCLogic {
     if (!FX.on || e.button) return;
     var t = e.target; if (!t || !t.closest) return;
     var el = t.closest('button, a, [role="button"]'); if (!el) return;
-    if (el.closest('.wcard, .nx-card')) { FX.play('tap'); return; }
+    if (el.closest('.wcard, .wk-it, .nx-card')) { FX.play('tap'); return; }
     if (el.matches('.sx-tab, .sx-pp, .cvt-tab, .gal-arr, .gal-btn')) { FX.play('tick'); return; }
     if (el.matches('.iss, .lt-open')) { FX.play('page'); return; }
     if (el.matches('.qs-link, .drawer-btn') || (el.getAttribute('aria-expanded') === 'false' && !el.hasAttribute('aria-haspopup'))) { FX.play('whoosh'); return; }

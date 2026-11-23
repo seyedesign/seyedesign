@@ -919,7 +919,7 @@ class Component extends DCLogic {
     if (!FX.on || e.button) return;
     var t = e.target; if (!t || !t.closest) return;
     var el = t.closest('button, a, [role="button"]'); if (!el) return;
-    if (el.closest('.wcard, .nx-card')) { FX.play('tap'); return; }
+    if (el.closest('.wcard, .wk-it, .nx-card')) { FX.play('tap'); return; }
     if (el.matches('.sx-tab, .sx-pp, .cvt-tab, .gal-arr, .gal-btn')) { FX.play('tick'); return; }
     if (el.matches('.iss, .lt-open')) { FX.play('page'); return; }
     if (el.matches('.qs-link, .drawer-btn') || (el.getAttribute('aria-expanded') === 'false' && !el.hasAttribute('aria-haspopup'))) { FX.play('whoosh'); return; }
