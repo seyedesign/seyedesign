@@ -86,10 +86,14 @@
   }
   window.__dcStart = function (C) {
     if (comp) { try { if (comp.componentWillUnmount) comp.componentWillUnmount(); } catch (e) {} comp = null; }
+    var first = !comp;
     root = document.getElementById('root'); tpl = document.getElementById('tpl');
-    while (root.firstChild) root.removeChild(root.firstChild);
+    /* first load: keep the pre-rendered markup and patch it in place (no flash); page swaps start clean */
+    if (!(first && root.hasAttribute('data-pre'))) { while (root.firstChild) root.removeChild(root.firstChild); }
+    root.removeAttribute('data-pre');
     comp = new C({ accent: '#FF0062' });
     render();
+    if (window.__SD_PRERENDER) return;
     if (comp.componentDidMount) comp.componentDidMount();
   };
 })();

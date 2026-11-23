@@ -1,0 +1,31 @@
+# Maryam Seyedi · Product Designer & Product Builder
+
+> Portfolio of Maryam Seyedi, a product designer and product builder with 7+ years in design. She works on digital products across EdTech, digital health and SaaS, from research and strategy to interaction design, design systems and AI-assisted prototyping. Based in Kuala Lumpur, Malaysia, and open to relocating.
+
+- Current role: Product Designer at Jack Westin (MCAT preparation platform), since 02/2026
+- Founder of Homay-nameh, a digital mail club
+- Contact: maryamseyedi2002@gmail.com
+- LinkedIn: https://www.linkedin.com/in/seyedesign/
+- CV (PDF): https://seyedesign.com/assets/48306c7d284943984aee061dcd2daa1e.pdf
+- Intro video, “So, tell me about yourself…” (2:32): https://vimeo.com/1249088670
+
+## Case studies
+
+- [Lila onboarding redesign](https://seyedesign.com/lila): redesigning the onboarding of Lila, an app for women in perimenopause, through an audit, benchmarking and testing with six women.
+- [MCAT Hub Calendar at Jack Westin](https://seyedesign.com/jackwestin): designing and launching a calendar that brings study schedules, assignments and live sessions together for MCAT students.
+- [Homay-nameh](https://seyedesign.com/homay): a monthly digital letter, two issues and two experiments, with feedback from 17 readers.
+- [Top Dogs](https://seyedesign.com/top-dogs): co-founding a product design studio that delivered 12+ digital products for startups.
+- [WeFrame](https://seyedesign.com/weframe): founding a design community where junior designers learn on real products.
+- [Rubikamp](https://seyedesign.com/rubikamp): designing and teaching a two-year product design course for teenagers.
+
+## Experience
+
+- Product Designer, Jack Westin (02/2026 – present)
+- Co-Founder & Product Designer, Top Dogs (05/2023 – 05/2026)
+- Product Designer, PolTalk, a psychology-focused platform (04/2023 – 09/2025)
+- Junior UI/UX Designer, Sobelz (12/2022 – 09/2023)
+- Graphic Designer, several brands and agencies (10/2019 – 10/2022)
+
+## Skills
+
+UX research, usability testing, interaction design, design systems, wireframing and prototyping, product strategy, MVP definition, visual design. Tools: Figma, FigJam, Notion, Microsoft Clarity, Hotjar, PostHog, Claude, ChatGPT, Google AI Studio, Lovable.
