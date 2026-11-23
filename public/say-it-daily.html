@@ -2317,7 +2317,7 @@ class Component extends DCLogic {
           '.hm-long{position:absolute;inset:0;opacity:0}',
           '.hm-li{display:block;width:100%;height:auto}',
           '.hm-pill{position:absolute;left:4.1%;top:92.4%;width:36.2%;height:auto;border-radius:99px;opacity:0}',
-          '.hm-desk{position:absolute;inset:0;z-index:3;background-color:#F7F0E2;background-image:linear-gradient(rgba(31,59,140,.08) 1px,transparent 1px),linear-gradient(90deg,rgba(31,59,140,.08) 1px,transparent 1px);background-size:3.2cqh 3.2cqh;-webkit-mask:radial-gradient(circle at var(--ix) var(--iy),transparent var(--hr),#000 calc(var(--hr) + 3cqh));mask:radial-gradient(circle at var(--ix) var(--iy),transparent var(--hr),#000 calc(var(--hr) + 3cqh));overflow:hidden}',
+          '.hm-desk{position:absolute;inset:0;z-index:3;background-color:#F7F0E2;background-image:linear-gradient(rgba(31,59,140,.08) 1px,transparent 1px),linear-gradient(90deg,rgba(31,59,140,.08) 1px,transparent 1px);background-size:3.2cqh 3.2cqh;overflow:hidden}',
           '.hm-st{position:absolute;width:3.4cqh;fill:#F2C46B;stroke:#1D2547;stroke-width:2;stroke-linejoin:round}',
           '.hm-st:nth-of-type(1){left:6%;top:12%;transform:rotate(-12deg)}.hm-st:nth-of-type(2){left:91%;top:18%;width:2.6cqh}.hm-st:nth-of-type(3){left:9%;top:68%;width:2.4cqh;transform:rotate(18deg)}.hm-st:nth-of-type(4){left:88%;top:62%;transform:rotate(10deg)}.hm-st:nth-of-type(5){left:50%;top:2%;width:2cqh}',
           '.hm-bk{position:absolute;left:var(--bx);top:var(--by);width:calc(var(--pw)*2);height:var(--ph);transform:translateX(var(--sh));transform-style:preserve-3d;perspective:300cqh;transform-origin:calc(var(--pw)*.4998) calc(var(--ph)*.3212)}',
@@ -2358,7 +2358,7 @@ class Component extends DCLogic {
           /* 3 · pulled into the picture; the letter opens like ink */
           '.sx.g3 .hm-desk{visibility:hidden}.sx.g3 .hm-pic{opacity:0}',
           '.sx-run[data-ch="3"] .hm-bkw{animation:hmAway .85s cubic-bezier(.7,0,.84,0) both}',
-          '.sx-run[data-ch="3"] .hm-desk{animation:hmInk 1s cubic-bezier(.33,1,.68,1) .76s both}',
+          '.sx-run[data-ch="3"] .hm-desk{-webkit-mask:radial-gradient(circle at var(--ix) var(--iy),transparent var(--hr),#000 calc(var(--hr) * 1.06 + 1px));mask:radial-gradient(circle at var(--ix) var(--iy),transparent var(--hr),#000 calc(var(--hr) * 1.06 + 1px));animation:hmInk 1s cubic-bezier(.33,1,.68,1) .76s both}',
           '.sx-run[data-ch="3"] .hm-fly{animation:hmFly 2.1s linear both}',
           '.sx-run[data-ch="3"] .hm-hi{animation:hmHi .7s ease both}',
           '@keyframes hmAway{from{transform:none;opacity:1;filter:none}50%{opacity:1}to{transform:scale(2.6);opacity:0;filter:blur(1cqh)}}',
