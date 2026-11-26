@@ -72,3 +72,45 @@
   });
   window.__sdGo = function (url) { remember(); return go(url, true, 0); };
 })();
+
+/* "Thinking Out Loud" card: play the LinkedIn video in a modal; loads on open, removed (stops) on close */
+(function () {
+  if (window.__sdTol) return; window.__sdTol = 1;
+  var open = null, last = null;
+  function close() {
+    if (!open) return; var m = open; open = null;
+    document.removeEventListener('keydown', onKey, true);
+    document.documentElement.style.overflow = '';
+    m.remove();
+    if (last && last.focus) try { last.focus(); } catch (e) {}
+  }
+  function onKey(e) {
+    if (e.key === 'Escape') { e.preventDefault(); close(); return; }
+    if (e.key === 'Tab' && open) {
+      var f = open.querySelectorAll('button, a[href], iframe'); if (!f.length) return;
+      var a = f[0], z = f[f.length - 1];
+      if (e.shiftKey && document.activeElement === a) { e.preventDefault(); z.focus(); }
+      else if (!e.shiftKey && document.activeElement === z) { e.preventDefault(); a.focus(); }
+    }
+  }
+  document.addEventListener('click', function (e) {
+    var c = e.target && e.target.closest ? e.target.closest('a[data-tol]') : null;
+    if (!c || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    e.preventDefault(); last = c;
+    var urn = c.getAttribute('data-tol'), href = c.getAttribute('href');
+    var m = document.createElement('div');
+    m.className = 'tol-modal'; m.setAttribute('role', 'dialog'); m.setAttribute('aria-modal', 'true'); m.setAttribute('aria-label', 'Video: AI Slop Is Everywhere.');
+    m.innerHTML = '<div class="tol-box">' +
+      '<button type="button" class="tol-x" aria-label="Close video"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"></path></svg></button>' +
+      '<div class="tol-frame"><iframe src="https://www.linkedin.com/embed/feed/update/' + urn + '?compact=1" title="Embedded LinkedIn video: AI Slop Is Everywhere." allow="autoplay; fullscreen; encrypted-media; picture-in-picture" allowfullscreen loading="eager"></iframe></div>' +
+      '<div class="tol-bar"><span class="tol-bar-t">AI Slop Is Everywhere.</span><a class="tol-li" href="' + href + '" target="_blank" rel="noopener">View on LinkedIn<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"></path></svg><span class="vh"> (opens in a new tab)</span></a></div>' +
+      '</div>';
+    m.addEventListener('click', function (ev) { if (ev.target === m || (ev.target.closest && ev.target.closest('.tol-x'))) close(); });
+    document.body.appendChild(m); open = m;
+    document.documentElement.style.overflow = 'hidden';
+    document.addEventListener('keydown', onKey, true);
+    requestAnimationFrame(function () { m.classList.add('is-open'); });
+    m.querySelector('.tol-x').focus();
+  }, true);
+  window.addEventListener('popstate', close);
+})();

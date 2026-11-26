@@ -264,6 +264,31 @@ header .w2 > .based-card > span:first-child > span:last-child{margin-top:auto}
 .intro-poster:hover .intro-img,.intro-poster:focus-visible .intro-img{transform:scale(1.02)}
 .intro-poster:hover .intro-pbtn,.intro-poster:focus-visible .intro-pbtn{transform:scale(1.06);background:#FF0062}
 .intro-poster:focus-visible{outline:2px solid #FF0062;outline-offset:-2px}
+.intro{grid-template-columns:minmax(0,2fr) minmax(0,1fr)}
+@media (min-width:861px){.intro-card{grid-column:1/-1;flex-direction:row;align-items:flex-end;gap:32px}.intro-card > div:first-child{gap:10px!important;flex:1 1 auto;min-width:0}.intro-card .intro-p{max-width:620px}.intro-foot{flex:none;flex-direction:column;align-items:flex-end;gap:12px}.intro-video{align-self:stretch}}
+.tol-card{display:flex;flex-direction:column;justify-content:space-between;gap:24px;min-width:0;background:var(--card);border-radius:var(--r-lg);padding:clamp(20px,2.6vw,32px);color:var(--ink);text-decoration:none;transition:background-color .25s ease}
+.tol-top{display:flex;flex-direction:column;gap:12px}
+.tol-h{font-weight:var(--fw-semibold);font-size:var(--fs-h3);letter-spacing:var(--ls-h3);line-height:var(--lh-h3)}
+.tol-p{font-size:var(--fs-body-sm);line-height:var(--lh-body-sm);color:var(--muted2)}
+.tol-cta{display:inline-flex;align-items:center;gap:10px;font-size:var(--fs-body-sm);font-weight:var(--fw-medium)}
+.tol-play{width:36px;height:36px;border-radius:var(--r-pill);display:flex;align-items:center;justify-content:center;background:var(--chip);color:var(--ink);transition:transform .25s ease,background-color .25s ease,color .25s ease}
+.tol-play svg{margin-left:2px}
+.tol-card:hover .tol-play,.tol-card:focus-visible .tol-play{transform:scale(1.06);background:#FF0062;color:#fff}
+.tol-card:focus-visible{outline:2px solid #FF0062;outline-offset:2px}
+.tol-modal{position:fixed;inset:0;font-family:var(--font-sans,"Geist",system-ui,sans-serif);z-index:1000;display:flex;align-items:center;justify-content:center;padding:clamp(16px,4vw,48px);background:rgba(10,10,10,.78);opacity:0;transition:opacity .2s ease}
+.tol-modal.is-open{opacity:1}
+.tol-box{position:relative;width:min(960px,100%);display:flex;flex-direction:column;gap:12px}
+.tol-frame{position:relative;width:100%;aspect-ratio:710/399;max-height:calc(100vh - 140px);background:#000;border-radius:var(--r-lg);overflow:hidden}
+.tol-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.tol-bar{display:flex;align-items:center;justify-content:space-between;gap:12px;color:#F2F1EE}
+.tol-bar-t{font-size:var(--fs-body-sm);font-weight:var(--fw-medium)}
+.tol-li{display:inline-flex;align-items:center;gap:6px;min-height:24px;font-size:var(--fs-body-sm);color:#A3A19C;text-decoration:none}
+.tol-li:hover,.tol-li:focus-visible{color:#F2F1EE;text-decoration:underline;text-underline-offset:3px}
+.tol-x{position:absolute;right:0;top:-48px;width:40px;height:40px;border-radius:var(--r-pill);border:0;background:rgba(255,255,255,.12);color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background-color .2s ease}
+.tol-x:hover,.tol-x:focus-visible{background:#FF0062}
+.tol-x:focus-visible,.tol-li:focus-visible{outline:2px solid #fff;outline-offset:2px}
+@media (max-width:860px){.intro{grid-template-columns:1fr}.tol-x{top:-46px}}
+@media (prefers-reduced-motion:reduce){.tol-card,.tol-play,.tol-modal{transition:none}}
 .intro-frame{position:absolute;inset:0;width:100%;height:100%;border:0;display:none;background:#000}
 .intro-video[data-on="1"] .intro-frame{display:block}
 .intro-video[data-on="1"] .intro-poster{display:none}
@@ -765,6 +790,12 @@ html.sd-pixel svg:has(path[d="m20 20-3.5-3.5M11 8v6M8 11h6"]) *,html.sd-pixel sv
 </button>
 <iframe class="intro-frame" src="{{intro.src}}" title="Video: Maryam Seyedi, tell me about yourself" allow="autoplay; fullscreen; picture-in-picture; encrypted-media" allowfullscreen referrerpolicy="strict-origin-when-cross-origin" tabindex="{{intro.tab}}"></iframe>
 </div>
+<a class="tol-card" href="https://www.linkedin.com/posts/seyedesign_aislop-design-ugcPost-7531607963871023105-gawt/" target="_blank" rel="noopener" data-tol="urn:li:ugcPost:7531607963871023105" aria-haspopup="dialog" aria-label="Watch video: AI Slop Is Everywhere. What's our responsibility as designers in a world full of AI slop?">
+<span class="tol-top"><span class="intro-eyebrow">Thinking Out Loud</span>
+<span class="tol-h">AI Slop Is Everywhere.</span>
+<span class="tol-p">What’s our responsibility as designers in a world full of AI slop?</span></span>
+<span class="tol-cta"><span class="tol-play" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13l11-6.5z"></path></svg></span>Watch video</span>
+</a>
 </section>
 
 <!-- ================= 2. SELECTED WORK ================= -->
@@ -1374,6 +1405,12 @@ html.sd-pixel svg:has(path[d="m20 20-3.5-3.5M11 8v6M8 11h6"]) *,html.sd-pixel sv
 </button>
 <iframe class="intro-frame" src="about:blank" title="Video: Maryam Seyedi, tell me about yourself" allow="autoplay; fullscreen; picture-in-picture; encrypted-media" allowfullscreen="" referrerpolicy="strict-origin-when-cross-origin" tabindex="-1"></iframe>
 </div>
+<a class="tol-card" href="https://www.linkedin.com/posts/seyedesign_aislop-design-ugcPost-7531607963871023105-gawt/" target="_blank" rel="noopener" data-tol="urn:li:ugcPost:7531607963871023105" aria-haspopup="dialog" aria-label="Watch video: AI Slop Is Everywhere. What's our responsibility as designers in a world full of AI slop?">
+<span class="tol-top"><span class="intro-eyebrow">Thinking Out Loud</span>
+<span class="tol-h">AI Slop Is Everywhere.</span>
+<span class="tol-p">What’s our responsibility as designers in a world full of AI slop?</span></span>
+<span class="tol-cta"><span class="tol-play" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13l11-6.5z"></path></svg></span>Watch video</span>
+</a>
 </section>
 
 <!-- ================= 2. SELECTED WORK ================= -->
